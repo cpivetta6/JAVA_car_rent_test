@@ -1,12 +1,17 @@
 package com.caiopivetta6.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -22,6 +27,11 @@ public class Category implements Serializable{
 	private String description;
 	private Double dailyPrice;
 	
+	@JsonIgnore
+	@OneToMany(mappedBy = "category")
+	private List<Car> cars = new ArrayList<>();
+	
+	
 	public Category() {
 		
 	}
@@ -31,6 +41,16 @@ public class Category implements Serializable{
 		this.id = id;
 		this.description = description;
 		this.dailyPrice = dailyPrice;
+	}
+
+		
+	
+	public List<Car> getCars() {
+		return cars;
+	}
+
+	public void setCars(List<Car> cars) {
+		this.cars = cars;
 	}
 
 	public Integer getId() {

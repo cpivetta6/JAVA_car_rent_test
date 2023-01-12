@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -21,14 +23,19 @@ public class City implements Serializable {
 	private Integer id;
 	private String name;
 	
+	@ManyToOne
+	@JoinColumn(name = "state_id")
+	private State state;
+	
 	public City() {
 		
 	}
 
-	public City(Integer id, String name) {
+	public City(Integer id, String name, State state) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.state = state;
 	}
 
 	public Integer getId() {

@@ -1,6 +1,6 @@
 package com.caiopivetta6.domain;
 
-import java.util.Date;
+import java.time.Instant;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -9,8 +9,6 @@ import jakarta.persistence.Table;
 @Table(name = "rentLongTerm_tb")
 public class RentLongTerm extends Rent{
 
-	
-	private static final long serialVersionUID = 1L;
 
 	private Integer days;
 	
@@ -18,11 +16,13 @@ public class RentLongTerm extends Rent{
 		
 	}
 
-	public RentLongTerm(Integer id, Date dateRent, Date dateDevolution, Integer days) {
-		super(id, dateRent, dateDevolution);
+	public RentLongTerm(Integer id, Instant dateRent, Instant dateDevolution, Client client, Car car,HeadQuarter headQuarter, Integer days) {
+		super(id, dateRent, dateDevolution, client, car, headQuarter);
 		this.days = days;
 		// TODO Auto-generated constructor stub
 	}
+
+
 
 	public Integer getDays() {
 		return days;

@@ -5,10 +5,15 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,9 +29,19 @@ public class Client implements Serializable{
 	private String name;
 	private String email;
 	
-	
+	@ElementCollection
+	@CollectionTable(name = "phone")
 	private Set<String> phone = new HashSet<>();
-
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "client")
+	private Set<Rent> rent = new HashSet<>();
+	
+	
+	
+	public Client() {
+		
+	}
 
 	public Client(Integer id, String name, String email) {
 		super();
@@ -34,7 +49,16 @@ public class Client implements Serializable{
 		this.name = name;
 		this.email = email;
 	}
+	
+	
 
+	public Set<Rent> getRent() {
+		return rent;
+	}
+
+	public void setRent(Set<Rent> rent) {
+		this.rent = rent;
+	}
 
 	public Integer getId() {
 		return id;

@@ -1,7 +1,7 @@
 package com.caiopivetta6.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
 import java.util.Objects;
 
 import jakarta.persistence.Entity;
@@ -10,6 +10,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -21,18 +24,61 @@ public abstract class Rent implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Date dateRent;
-	private Date dateDevolution;
+	private Instant dateRent;
+	private Instant dateDevolution;
+	
+	@ManyToOne
+	@JoinColumn(name = "headQuarter")
+	private HeadQuarter headQuarter = new HeadQuarter();
+	
+	@ManyToOne
+	@JoinColumn (name = "car")
+	private Car car = new Car();
+	
+	@ManyToOne
+	@JoinColumn(name = "client_id")
+	private Client client = new Client();
+	
+	
 	
 	public Rent() {
 		
 	}
 
-	public Rent(Integer id, Date dateRent, Date dateDevolution) {
+	public Rent(Integer id, Instant dateRent, Instant dateDevolution, Client client, Car car, HeadQuarter headQuarter) {
 		super();
 		this.id = id;
 		this.dateRent = dateRent;
 		this.dateDevolution = dateDevolution;
+		this.client = client;
+		this.car = car;
+		this.headQuarter = headQuarter;
+	}
+	
+	
+
+	public HeadQuarter getHeadQuarter() {
+		return headQuarter;
+	}
+
+	public void setHeadQuarter(HeadQuarter headQuarter) {
+		this.headQuarter = headQuarter;
+	}
+
+	public Car getCar() {
+		return car;
+	}
+
+	public void setCar(Car car) {
+		this.car = car;
+	}
+
+	public Client getClient() {
+		return client;
+	}
+
+	public void setClient(Client client) {
+		this.client = client;
 	}
 
 	public Integer getId() {
@@ -43,19 +89,19 @@ public abstract class Rent implements Serializable {
 		this.id = id;
 	}
 
-	public Date getDateRent() {
+	public Instant getDateRent() {
 		return dateRent;
 	}
 
-	public void setDateRent(Date dateRent) {
+	public void setDateRent(Instant dateRent) {
 		this.dateRent = dateRent;
 	}
 
-	public Date getDateDevolution() {
+	public Instant getDateDevolution() {
 		return dateDevolution;
 	}
 
-	public void setDateDevolution(Date dateDevolution) {
+	public void setDateDevolution(Instant dateDevolution) {
 		this.dateDevolution = dateDevolution;
 	}
 

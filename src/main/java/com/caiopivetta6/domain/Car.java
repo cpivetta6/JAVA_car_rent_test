@@ -1,13 +1,21 @@
 package com.caiopivetta6.domain;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.Instant;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,13 +32,26 @@ public class Car implements Serializable {
 	private String licensePlate;
 	private String color;
 	private Integer year;
-	private Date acquisitionDate;
+	private Instant acquisitionDate;
+	
+	@ManyToOne
+	@JoinColumn(name = "headQuarter_id")
+	private HeadQuarter headQuarter;
+	
+	@ManyToOne
+	@JoinColumn(name = "category_id")
+	private Category category;
+	
+	@Lob
+	@JsonIgnore
+	@OneToMany(mappedBy = "car")
+	private List<Rent> rent = new ArrayList<>();
 	
 	public Car () {
 		
 	}
 
-	public Car(Integer id, String model, String licensePlate, String color, Integer year, Date acquisitionDate) {
+	public Car(Integer id, String model, String licensePlate, String color, Integer year, Instant acquisitionDate, Category category) {
 		super();
 		this.id = id;
 		this.model = model;
@@ -38,6 +59,33 @@ public class Car implements Serializable {
 		this.color = color;
 		this.year = year;
 		this.acquisitionDate = acquisitionDate;
+		this.category = category;
+	}
+	
+	
+
+	public HeadQuarter getHeadQuarter() {
+		return headQuarter;
+	}
+
+	public void setHeadQuarter(HeadQuarter headQuarter) {
+		this.headQuarter = headQuarter;
+	}
+
+	public List<Rent> getRent() {
+		return rent;
+	}
+
+	public void setRent(List<Rent> rent) {
+		this.rent = rent;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
 	public Integer getId() {
@@ -80,12 +128,12 @@ public class Car implements Serializable {
 		this.year = year;
 	}
 
-	public Date getAcquisitionDate() {
+	public Instant getAcquisitionInstant() {
 		return acquisitionDate;
 	}
 
-	public void setAcquisitionDate(Date acquisitionDate) {
-		this.acquisitionDate = acquisitionDate;
+	public void setAcquisitionInstant(Instant acquisitionInstant) {
+		this.acquisitionDate = acquisitionInstant;
 	}
 
 	@Override

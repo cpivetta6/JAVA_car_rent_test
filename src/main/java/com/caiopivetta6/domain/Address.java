@@ -3,10 +3,16 @@ package com.caiopivetta6.domain;
 import java.io.Serializable;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.MapsId;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -24,17 +30,38 @@ public class Address implements Serializable{
 	private String number;
 	private String zcode;
 	
+	@ManyToOne
+	@JoinColumn(name = "city_id")
+	private City city;
+	
+	@JsonIgnore
+	@OneToOne
+	@JoinColumn(name = "headQuarter_id")
+	@MapsId
+	private HeadQuarter headQuarter;
+	
 	public Address() {
 		
 	}
 
-	public Address(Integer id, String publicPlace, String square, String number, String zcode) {
+	public Address(Integer id, String publicPlace, String square, String number, String zcode, City city) {
 		super();
 		this.id = id;
 		this.publicPlace = publicPlace;
 		this.square = square;
 		this.number = number;
 		this.zcode = zcode;
+		this.city = city;
+	}
+	
+	
+
+	public HeadQuarter getHeadQuarter() {
+		return headQuarter;
+	}
+
+	public void setHeadQuarter(HeadQuarter headQuarter) {
+		this.headQuarter = headQuarter;
 	}
 
 	public Integer getId() {

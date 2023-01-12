@@ -1,6 +1,7 @@
 package com.caiopivetta6.domain;
 
-import java.util.Date;
+import java.time.Instant;
+import java.time.ZoneId;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -9,8 +10,6 @@ import jakarta.persistence.Table;
 @Table(name = "rentDaily_tb")
 public class RentDaily extends Rent{
 
-
-	private static final long serialVersionUID = 1L;
 	
 	private Integer days;
 	
@@ -18,9 +17,17 @@ public class RentDaily extends Rent{
 		
 	}
 
-	public RentDaily(Integer id, Date dateRent, Date dateDevolution, Integer days) {
-		super(id, dateRent, dateDevolution);
-		this.days = days;
+	public RentDaily(Integer id, Instant dateRent, Instant dateDevolution, Client client, Car car, HeadQuarter headQuarter) {
+		super(id, dateRent, dateDevolution, client, car, headQuarter);
+		this.days = daysRent(dateRent, dateDevolution);
+	}
+	
+	private Integer daysRent(Instant d1, Instant d2) {
+		
+		int days = d2.atZone(ZoneId.systemDefault()).getDayOfMonth() - d1.atZone(ZoneId.systemDefault()).getDayOfMonth();
+		
+		return days;
+		
 		
 	}
 
