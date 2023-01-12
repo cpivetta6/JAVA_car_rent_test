@@ -21,13 +21,14 @@ public class HeadQuarter implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer code;
+	/*
 	
 	private Address address = new Address();
 	
 	private List<Car> cars = new ArrayList<>();
 	
 	private List<Rent> rent = new ArrayList<>();
-	
+	*/
 	
 	
 	public HeadQuarter() {
