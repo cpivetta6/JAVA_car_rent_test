@@ -140,10 +140,11 @@ public class CarRentProjectApplication implements CommandLineRunner {
 		Rent rent2 = new RentLongTerm(null, sdf.parse("22/01/2023 10:30").toInstant(), sdf.parse("22/01/2023 10:30").toInstant(), client1, car2, hq2, 2);
 		Rent rent3 = new RentLongTerm(null, sdf.parse("22/01/2023 10:30").toInstant(), sdf.parse("22/01/2023 10:30").toInstant(), client1, car2, hq2, 2);
 		
+		//car get rent
 		car1.getRent().addAll(Arrays.asList(rent1));
 		car2.getRent().addAll(Arrays.asList(rent3));
 		
-		
+		//headquarter get rents
 		hq1.getRent().addAll(Arrays.asList(rent1));
 		hq2.getRent().addAll(Arrays.asList(rent1));
 		
