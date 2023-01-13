@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 
@@ -31,6 +32,7 @@ public abstract class Rent implements Serializable {
 	@JoinColumn(name = "headQuarter")
 	private HeadQuarter headQuarter = new HeadQuarter();
 	
+	@Lob
 	@ManyToOne
 	@JoinColumn (name = "car")
 	private Car car = new Car();

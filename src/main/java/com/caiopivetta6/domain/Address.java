@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -30,14 +31,14 @@ public class Address implements Serializable{
 	private String number;
 	private String zcode;
 	
+	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name = "city_id")
 	private City city;
 	
 	@JsonIgnore
-	@OneToOne
-	@JoinColumn(name = "headQuarter_id")
-	@MapsId
+	@OneToOne(mappedBy = "address")
 	private HeadQuarter headQuarter;
 	
 	public Address() {

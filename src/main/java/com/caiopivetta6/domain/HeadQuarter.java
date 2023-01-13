@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -24,15 +27,20 @@ public class HeadQuarter implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer code;
+	private Integer id;
 	
 	
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "headQuarter")
+	
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinColumn(name = "address_id")
 	private Address address;
 	
-	@OneToMany(mappedBy = "headQuarter")
+	@JsonIgnore
+	@Lob
+	@OneToMany(mappedBy = "headQuarter", cascade = CascadeType.ALL)
 	private List<Car> cars = new ArrayList<>();
 	
+	@JsonIgnore
 	@OneToMany(mappedBy = "headQuarter")
 	private List<Rent> rent = new ArrayList<>();
 	
@@ -42,12 +50,22 @@ public class HeadQuarter implements Serializable {
 		
 	}
 
-	public HeadQuarter(Integer code, Address address) {
+	public HeadQuarter(Integer id) {
 		super();
-		this.code = code;
-		this.address = address;
+		this.id = id;
+		//this.address = address;
 	}
 	
+	
+	
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public Address getAddress() {
 		return address;
@@ -75,7 +93,7 @@ public class HeadQuarter implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(code);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -87,7 +105,7 @@ public class HeadQuarter implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		HeadQuarter other = (HeadQuarter) obj;
-		return Objects.equals(code, other.code);
+		return Objects.equals(id, other.id);
 	}
 	
 	

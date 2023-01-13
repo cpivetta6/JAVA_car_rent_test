@@ -7,10 +7,12 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
@@ -27,8 +29,9 @@ public class Category implements Serializable{
 	private String description;
 	private Double dailyPrice;
 	
+	@Lob
 	@JsonIgnore
-	@OneToMany(mappedBy = "category")
+	@OneToMany(mappedBy = "category",  cascade = CascadeType.ALL)
 	private List<Car> cars = new ArrayList<>();
 	
 	

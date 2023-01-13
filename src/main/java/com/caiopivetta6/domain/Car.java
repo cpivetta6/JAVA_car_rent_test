@@ -28,12 +28,15 @@ public class Car implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	
 	private String model;
 	private String licensePlate;
 	private String color;
-	private Integer year;
-	private Instant acquisitionDate;
+	private Integer yearOf;
 	
+	
+	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "headQuarter_id")
 	private HeadQuarter headQuarter;
@@ -51,18 +54,25 @@ public class Car implements Serializable {
 		
 	}
 
-	public Car(Integer id, String model, String licensePlate, String color, Integer year, Instant acquisitionDate, Category category) {
+	public Car(Integer id, String model, String licensePlate,Integer yearOf, String color ) {
 		super();
 		this.id = id;
 		this.model = model;
 		this.licensePlate = licensePlate;
+		this.yearOf = yearOf;
 		this.color = color;
-		this.year = year;
-		this.acquisitionDate = acquisitionDate;
-		this.category = category;
+		
 	}
+
 	
-	
+
+	public Integer getYearOf() {
+		return yearOf;
+	}
+
+	public void setYearOf(Integer yearOf) {
+		this.yearOf = yearOf;
+	}
 
 	public HeadQuarter getHeadQuarter() {
 		return headQuarter;
@@ -120,21 +130,8 @@ public class Car implements Serializable {
 		this.color = color;
 	}
 
-	public Integer getYear() {
-		return year;
-	}
 
-	public void setYear(Integer year) {
-		this.year = year;
-	}
 
-	public Instant getAcquisitionInstant() {
-		return acquisitionDate;
-	}
-
-	public void setAcquisitionInstant(Instant acquisitionInstant) {
-		this.acquisitionDate = acquisitionInstant;
-	}
 
 	@Override
 	public int hashCode() {
